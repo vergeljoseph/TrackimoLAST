@@ -1,0 +1,47 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LAST | Lead Automation System for Trackimo</title>
+
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
+    
+
+</head>
+<body>
+{<pagenotfound}
+	<div style="margin:0 auto;">
+	<div style="text-align: center; margin-top: 50px;">
+		<h1 style="font-size: 120px; color:orange; padding-bottom: -10px; display: inline-block;">
+		<strong>RESTRICTED</strong></h1>
+		<center>
+		<p style="font-size:20px; display: inline-block;">You do not have privileges to complete the action</p>
+		<!-- <h4>LAST | Lead Automation System for Trackimo</h4> -->
+		<form action='/'>
+		<br><br><input type="submit" class="btn btn-meduim btn-info" value="Back to Homepage"/>
+		</form>
+	</div>
+	</div>
+		
+	
+	<!-- start: JavaScript-->
+	<!-- end: JavaScript-->
+	{/pagenotfound}
+</body>
+</html>

@@ -1,0 +1,44 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | Remove Category</title>
+</head>
+<body>
+    
+    {<removeCategory}
+        <!-- start: Content -->
+        <div class="card-content">
+            <h3><span class="card-title">Remove Category</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/deleteCategory" method="POST">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError2" name="category" data-rel="chosen">
+                                <option value="" disabled selected>Choose category to remove</option>
+                                  {#category}
+                                <option value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating red" type="submit" name="action"/>
+                                        <i class="material-icons left">delete</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    {/removeCategory}
+    
+
+</body>
+</html>

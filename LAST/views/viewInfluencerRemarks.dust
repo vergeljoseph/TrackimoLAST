@@ -1,0 +1,87 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Influencers</title>
+    <style type="text/css">
+        .middle-content {
+            padding-top: 25px;
+            /* padding-right: 25px; */
+            float: left;
+            width: 100%;
+        }
+    </style>
+    
+</head>
+<body>
+	
+	{<viewAdvertiser}
+		<!-- start: Content -->
+        {@select key=role }
+                        {@eq value="Admin"}
+                            <div class="fixed-action-btn toolbar">
+                                  <a class="btn-floating btn-large red" onclick="ConvertToCSV()">
+                                    <i class="large material-icons">receipt</i>
+                                  </a>
+                            </div>   
+                        {/eq}
+                        {@eq value="Staff"}
+                            <div class="fixed-action-btn toolbar">
+                                  <a class="btn-floating btn-large red" onclick="ConvertToCSV()">
+                                    <i class="large material-icons">receipt</i>
+                                  </a>
+                            </div>   
+                        {/eq}
+                    {/select}
+        
+		<div class="card-content">
+            <h3>Influencers' Remarks</h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+                <table class="bordered striped highlight responsive-table mdl-data-table" style="width: 100%">
+                    <thead>
+                      <tr>
+                        
+                          <strong><th><center>Comment</center></th></strong>
+                          <strong><th colspan="3"><center>Date Added</center></th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                       
+                        
+                        {#remarks}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered"><center>{comment}</td>
+                            <td class="centered"><center>{month}</td>
+                            <td class="centered"><center>{day}</td>
+                            <td class="centered"><center>{year}</td>
+                            
+                            <!-- <form action="/viewInfluencerDetails" method="POST">
+                            <input type="hidden" name="holder" value="{id}"/>
+                            <td class="centered"><center><button class="btn-floating violet" type="submit" name="action"/>
+                            <i class="material-icons left">visibility</i></td>
+                            </form>
+                            <form action="/viewInfluencerRemarks" method="POST">
+                            <input type="hidden" name="holder2" value="{influencer_id}"/>
+                            <td class="centered"><center><button class="btn-floating blue" type="submit" name="action"/>
+                            <i class="material-icons left">history</i></td>
+                            </form> -->
+                        </tr>
+                        {/remarks}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewAdvertiser}
+</body>
+</html>

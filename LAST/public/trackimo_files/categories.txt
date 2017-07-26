@@ -1,0 +1,52 @@
+category_name
+Adventure
+Airport Shuttle
+Auction Houses
+Backpackers
+Bicycle
+Bicycle Rentals
+Boat
+Boat Rentals
+Camel Supplies
+Clubs for Affiliates
+Dog
+Drone
+Education/School
+Elderlies
+Electronic Stores
+Employee Tracking
+Equipment Rental
+Facilities/Support Group
+Fleet
+Fleet Rentals
+Fleet (Vehicles)
+Fleet (Trucks)
+Heavy Equipment
+Hotels & Resorts
+Insurance COmpanies
+Juvenile COuntry Courts
+Law Enforcement
+Manufacturers of Expensive Equipment
+Military Supplies
+Motorcycle
+Musical Instruments
+Online Stores
+Pets
+Pet Trackers
+Photography
+Private Investigator
+Security/Survellance
+Service Category
+Service Technicians
+Specialty Store
+Sporting Goods
+Sports
+Stolen Mobile Things
+Summer-Related
+Supplier for Security Tags
+Television
+Top USA Companies
+Travelers Group
+Truck Stop
+USA City Listing
+Vending Machine

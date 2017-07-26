@@ -1,0 +1,73 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Lead-</title>
+    <style type="text/css">
+        .middle-content {
+            padding-top: 25px;
+            /* padding-right: 25px; */
+            float: left;
+            width: 100%;
+        }
+        td {
+          border-right: solid 1px #f9f9f9; 
+          border-left: solid 1px #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3>List of Leads</h3>{#niche}
+            <h5>{niche_name}{/niche}</h5>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+                <table class="bordered striped highlight responsive-table mdl-data-table" style="width: 100%">
+                    <thead>
+                      <tr>
+                        
+                          <strong><th>E-mail Address</center></th></strong>
+                          <!-- <strong><th><center>Company</center></th></strong> -->
+                          <!-- <strong><th>Contact Person</center></th></strong> -->
+                          <strong><th><center>Phone Number</center></th></strong>
+                          <strong><th><center>Website</center></th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                       
+                        
+                        {#lead}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered" align="left" style="width:40px">{email_address}</td>
+                            <!-- <td class="centered"><center>{company}</td> -->
+                            <!-- <td class="centered" align="left">{contact_person}</td> -->
+                            <td class="centered" align="left"><center>{phone_number}</td>
+                            <td class="centered" align="left" width="20px">{website}</td>
+                            
+                            <form action="/viewLead" method="POST">
+                            <input type="hidden" name="holder" value="{email_id}"/>
+                            <td class="centered"><center><button class="btn-floating violet" type="submit" name="action"/>
+                            <i class="material-icons left">visibility</i></td>
+                            </form>
+                        </tr>
+                        {/lead}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>

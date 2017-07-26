@@ -1,0 +1,453 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | Edit Category</title>
+</head>
+<body>
+    
+    {<index}
+    	<div class = "row" style="display: flex; justify-content: center;">
+    		<!--RANGE 
+				<div class = "input-field col s4">
+	                <label for="category_name" class="active">From</label>
+	                <input type="date" class="datepicker" name="startDate">
+		        </div>
+	    		<div class = "input-field col s4">
+		                <label for="category_name" class="active">To</label>
+		                <input type="date" class="datepicker" name="endDate">
+		        </div>
+		        <button class="btn waves-effect waves-light" type="submit" id="show" style="margin-top: 10px">Show
+  				</button> -->
+  			<!-- MOST RECENT -->
+  			<div class="input-field col s4">
+  				<center><button class="btn waves-effect waves-light" type="submit" id="recentButton"  style="margin-top: 10px;background-color: #3498DB">
+  					MOST RECENT
+  				</button>
+           	</div>
+  			<div class="input-field col s4">
+  				<center><button class="btn waves-effect waves-light" type="submit" id="lastMonthButton"  style="margin-top: 10px;background-color: #3498DB">
+  					LAST 30 DAYS
+  				</button>
+           	</div>
+           	<div class="input-field col s4">
+  				<center><button class="btn waves-effect waves-light" type="submit" id="lastYearButton" style="margin-top: 10px;background-color: #3498DB">
+	        		LAST 12 MONTHS
+	        	</button>
+           	</div>
+		</div>
+
+		<!-- THIS IS WHERE THE CHART WILL BE DRAWN -->
+        <div id="chart-container">
+			<canvas id="interactiveChart" style="width:1100px; height:400px;"></canvas>
+		</div>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script>
+
+		$.when(
+		    $.getJSON('/initialChart'),
+		    $.getJSON('/lastMonth'),
+		    $.getJSON('/lastYear')
+		).done(function(initial, lMonth, lYear) {
+			var months = [
+					'January', 
+					'February', 
+					'March', 
+					'April', 
+					'May', 
+					'June',
+					'July',
+					'August',
+					'September',
+					'October',
+					'November',
+					'December'
+				];
+
+			var useMonths = [];
+			var dataBounced = [];
+			var dataClicked = [];
+			var dataComplained = [];
+			var dataDNO = [];
+			var dataOpened = [];
+			var dataUnsubscribed = [];
+			var valueBounced = [];
+			var valueClicked = [];
+			var valueComplained = [];
+			var valueDNO = [];
+			var valueOpened = [];
+			var valueUnsubscribed = [];
+			var ctx;
+			var percentage_bounced;
+			var percentage_complained;
+			var percentage_clicked;
+			var percentage_dno;
+			var percentage_opened;
+			var percentage_unsubscribed;
+
+
+			var title = "Most Recent Report";
+			resetCanvas();
+			createDataDaily(initial, title);
+
+			$('#recentButton').on('click', function(){
+				var title = "Most Recent Report";
+				resetCanvas();
+				createDataDaily(initial, title);
+				
+			});
+
+			$('#lastMonthButton').on('click', function(){
+				var title = "Last 30 Days";
+				resetCanvas();
+				createDataDaily(lMonth, title);
+				
+			});
+
+			$('#lastYearButton').on('click', function(){
+				var title = "Last 12 Months";
+				resetCanvas();
+				createDataMonthly(lYear, title);
+			});
+
+			function createDataMonthly(report, titleText){
+				
+				report = report[0];
+				console.log("creating data");
+				console.log(report);
+				useMonths = [];
+				dataBounced = [];
+				dataClicked = [];
+				dataComplained = [];
+				dataDNO = [];
+				dataOpened = [];
+				dataUnsubscribed = [];
+				valueBounced = [];
+				valueClicked = [];
+				valueComplained = [];
+				valueDNO = [];
+				valueOpened = [];
+				valueUnsubscribed = [];
+				var data = {};
+				var options = {};
+
+				for (element in report){
+					useMonths.push(months[report[element].month-1]);
+				};
+
+				for(element in report){
+					var total = parseInt(report[element].bounced) + parseInt(report[element].clicked) + parseInt(report[element].complained) + parseInt(report[element].dno) + parseInt(report[element].opened) + parseInt(report[element].unsubscribed);
+
+					percentage_bounced = Math.round(((report[element].bounced/total)*100)*100)/100;
+					percentage_complained = Math.round(((report[element].complained/total)*100)*100)/100;
+					percentage_clicked = Math.round(((report[element].clicked/total)*100)*100)/100;
+					percentage_dno = Math.round(((report[element].dno/total)*100)*100)/100;
+					percentage_opened = Math.round(((report[element].opened/total)*100)*100)/100;
+					percentage_unsubscribed = Math.round(((report[element].unsubscribed/total)*100)*100)/100;
+				
+					dataBounced.push(percentage_bounced);
+					dataClicked.push(percentage_clicked);
+					dataComplained.push(percentage_complained);
+					dataDNO.push(percentage_dno);
+					dataOpened.push(percentage_opened);
+					dataUnsubscribed.push(percentage_unsubscribed);
+
+					valueBounced.push(report[element].bounced);
+					valueClicked.push(report[element].clicked);
+					valueComplained.push(report[element].complained);
+					valueDNO.push(report[element].dno);
+					valueOpened.push(report[element].opened);
+					valueUnsubscribed.push(report[element].unsubscribed);
+
+					total = 0;
+				};
+				
+				
+
+				data = {
+			        labels: useMonths,
+			        datasets: [
+				        {
+				            label: 'Bounced',
+				            backgroundColor: 'rgba(26, 188, 156, 0.7)',
+				            borderColor: 'rgba(26, 188, 156, 0.7)',
+				            data: dataBounced,
+				            value: valueBounced
+				        },
+				        {
+				            label: 'Clicked',
+				            backgroundColor: 'rgba(142, 68, 173, 0.7)',
+				            borderColor: 'rgba(142, 68, 173, 0.7)',
+				            data: dataClicked,
+				            value: valueClicked
+				        },
+				        {
+				            label: 'Complained',
+				            backgroundColor: 'rgba(52, 152, 219, 0.7)',
+				            borderColor: 'rgba(52, 152, 219, 0.7)',
+				            data: dataComplained,
+				            value: valueComplained
+				        },
+				        {
+				            label: 'DNO',
+				            backgroundColor: 'rgba(244, 208, 63, 0.7)',
+				            borderColor: 'rgba(244, 208, 63, 0.7)',
+				            data: dataDNO,
+				            value: valueDNO
+				        },
+				        {
+				            label: 'Opened',
+				            backgroundColor: 'rgba(231, 76, 60, 0.7)',
+				            borderColor: 'rgba(231, 76, 60, 0.7)',
+				            data: dataOpened,
+				            value: valueOpened
+				        },
+				        {
+				            label: 'Unsubscribed',
+				            backgroundColor: 'rgba(255, 151, 33, 0.7)',
+				            borderColor: 'rgba(255, 151, 33, 0.7)',
+				            data: dataUnsubscribed,
+				            value: valueUnsubscribed
+				        }
+				    ]
+			    };
+
+				options = {
+					tooltips: {
+		                callbacks: {
+		                    label: function(tooltipItems, data) { 
+		                        return firstToolTip = data.datasets[tooltipItems.datasetIndex].label + ' : '  + tooltipItems.yLabel + ' % - ' + data.datasets[tooltipItems.datasetIndex].value[tooltipItems.index] + ' Emails';
+		                    }
+		                }
+		            },
+					scales: {
+					    xAxes: [{
+			                gridLines: {
+			                    color: "rgba(77, 80, 82, 1)",
+			                },
+			                ticks: {
+			                	fontSize: 15,
+			                	fontColor: '#000000'
+			                }
+			            }],
+					    yAxes: [{
+			                gridLines: {
+			                    color: "rgba(154, 161, 166, 0.5)",
+			                },
+			                ticks: {
+				                beginAtZero: true
+				            }
+					    }]	
+				    },
+				    title: {
+			            display: true,
+			            text: titleText,
+			            fontSize: 15
+			        },
+			        responsive: false
+				};
+				var myChart = new Chart(ctx, {type: 'bar', data, options});
+			};
+
+			function createDataDaily(report, titleText){
+				report = report[0];
+				console.log("creating data");
+				console.log(report);
+				useMonths = [];
+				dataBounced = [];
+				dataClicked = [];
+				dataComplained = [];
+				dataDNO = [];
+				dataOpened = [];
+				dataUnsubscribed = [];
+				valueBounced = [];
+				valueClicked = [];
+				valueComplained = [];
+				valueDNO = [];
+				valueOpened = [];
+				valueUnsubscribed = [];
+				var data = {};
+				var options = {};
+
+				for (element in report){
+					useMonths.push(months[(report[element].month-1)]+" "+report[element].day+" ("+report[element].niche_name+")");
+				};
+
+				for(element in report){
+					var total = parseInt(report[element].bounced) + parseInt(report[element].clicked) + parseInt(report[element].complained) + parseInt(report[element].dno) + parseInt(report[element].opened) + parseInt(report[element].unsubscribed);
+
+					percentage_bounced = Math.round(((report[element].bounced/total)*100)*100)/100;
+					percentage_complained = Math.round(((report[element].complained/total)*100)*100)/100;
+					percentage_clicked = Math.round(((report[element].clicked/total)*100)*100)/100;
+					percentage_dno = Math.round(((report[element].dno/total)*100)*100)/100;
+					percentage_opened = Math.round(((report[element].opened/total)*100)*100)/100;
+					percentage_unsubscribed = Math.round(((report[element].unsubscribed/total)*100)*100)/100;
+				
+					dataBounced.push(percentage_bounced);
+					dataClicked.push(percentage_clicked);
+					dataComplained.push(percentage_complained);
+					dataDNO.push(percentage_dno);
+					dataOpened.push(percentage_opened);
+					dataUnsubscribed.push(percentage_unsubscribed);
+
+					valueBounced.push(report[element].bounced);
+					valueClicked.push(report[element].clicked);
+					valueComplained.push(report[element].complained);
+					valueDNO.push(report[element].dno);
+					valueOpened.push(report[element].opened);
+					valueUnsubscribed.push(report[element].unsubscribed);
+
+					total = 0;
+				};
+
+				data = {
+			        labels: useMonths,
+			        datasets: [
+				        {
+				            label: 'Bounced',
+				            backgroundColor: 'rgba(26, 188, 156, 0.7)',
+				            borderColor: 'rgba(26, 188, 156, 0.7)',
+				            data: dataBounced,
+				            value: valueBounced
+				        },
+				        {
+				            label: 'Clicked',
+				            backgroundColor: 'rgba(142, 68, 173, 0.7)',
+				            borderColor: 'rgba(142, 68, 173, 0.7)',
+				            data: dataClicked,
+				            value: valueClicked
+				        },
+				        {
+				            label: 'Complained',
+				            backgroundColor: 'rgba(52, 152, 219, 0.7)',
+				            borderColor: 'rgba(52, 152, 219, 0.7)',
+				            data: dataComplained,
+				            value: valueComplained
+				        },
+				        {
+				            label: 'DNO',
+				            backgroundColor: 'rgba(244, 208, 63, 0.7)',
+				            borderColor: 'rgba(244, 208, 63, 0.7)',
+				            data: dataDNO,
+				            value: valueDNO
+				        },
+				        {
+				            label: 'Opened',
+				            backgroundColor: 'rgba(231, 76, 60, 0.7)',
+				            borderColor: 'rgba(231, 76, 60, 0.7)',
+				            data: dataOpened,
+				            value: valueOpened
+				        },
+				        {
+				            label: 'Unsubscribed',
+				            backgroundColor: 'rgba(255, 151, 33, 0.7)',
+				            borderColor: 'rgba(255, 151, 33, 0.7)',
+				            data: dataUnsubscribed,
+				            value: valueUnsubscribed
+				        }
+				    ]
+			    };
+
+				options = {
+					tooltips: {
+		                callbacks: {
+		                    label: function(tooltipItems, data) { 
+		                        return firstToolTip = data.datasets[tooltipItems.datasetIndex].label + ' : '  + tooltipItems.yLabel + ' % - ' + data.datasets[tooltipItems.datasetIndex].value[tooltipItems.index] + ' Emails';
+		                    }
+		                }
+		            },
+					scales: {
+					    xAxes: [{
+			                gridLines: {
+			                    color: "rgba(77, 80, 82, 1)",
+			                },
+			                ticks: {
+			                	fontSize: 15,
+			                	fontColor: '#000000'
+			                }
+			            }],
+					    yAxes: [{
+			                gridLines: {
+			                    color: "rgba(154, 161, 166, 0.5)",
+			                },
+			                ticks: {
+				                beginAtZero: true
+				            }
+					    }]	
+				    },
+				    title: {
+			            display: true,
+			            text: titleText,
+			            fontSize: 15
+			        },
+			        responsive: false
+				};
+				var myChart = new Chart(ctx, {type: 'bar', data, options});
+			};
+
+			function resetCanvas() {
+				$("#interactiveChart").remove();
+				$('#chart-container').append('<canvas id="interactiveChart" style="width:1100px; height:450px;"></canvas>');
+				canvas = document.querySelector('#interactiveChart');
+				ctx = document.getElementById("interactiveChart").getContext('2d');
+			};			
+
+		});
+		
+	</script>
+
+	
+	<!-- <script>
+		$.getJSON('/recentReportChart', function(report) {
+			console.log(report);
+			var thisData = report[0];
+			var data = {
+				labels: [
+			        'Bounced', 
+			        'Clicked',
+			        'Complained', 
+			        'DNO',
+			        'Opened',
+			        'Unsubscribed'
+			    ],
+				datasets: [{
+			        data: [
+				    	thisData.bounced,
+				    	thisData.clicked,
+				    	thisData.complained,
+				    	thisData.dno,
+				    	thisData.opened,
+				    	thisData.unsubscribed,
+			        ],
+				    backgroundColor: [
+				    	'rgba(26, 188, 156, 0.7)',
+				    	'rgba(142, 68, 173, 0.7)',
+				    	'rgba(52, 152, 219, 0.7)',
+				    	'rgba(244, 208, 63, 0.7)',
+				    	'rgba(231, 76, 60, 0.7)'
+				    ]
+			    }]	    
+			};
+
+			var options = {
+				responsive: false
+			};
+			var ctx = document.getElementById("recentReport").getContext('2d');
+
+			var pChart = new Chart(ctx, {type: 'polarArea', data, options});
+		});
+		
+	</script> -->
+    {/index}
+    
+
+</body>
+</html>

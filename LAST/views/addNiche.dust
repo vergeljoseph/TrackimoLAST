@@ -1,0 +1,51 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Niche</title>
+</head>
+<body>
+	
+	{<addNiche}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Add Niche</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/confirmAddNiche" method="POST">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Niche" id="niche_name" name="niche_name" type="text" class="validate" required>
+                            <label for="niche_name" class="active">Niche Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError2" name="category" data-rel="chosen" required>
+                                <option value="" disabled selected>Choose niche category</option>
+                                  {#category}
+                                <option value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating blue" type="submit" name="action"/>
+                                        <i class="material-icons left">add</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+	{/addNiche}
+	
+
+</body>
+</html>

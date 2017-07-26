@@ -1,0 +1,86 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Staff</title>
+</head>
+<body>
+	
+	{<addCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Add Staff</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/confirmAddStaff" method="POST">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input placeholder="First Name" id="first_name" name="first_name" type="text" class="validate" required>
+                            <label for="first_name" class="active">First Name</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input maxlength="1" placeholder="M.I" id="middle_init" name="middle_init" type="text" class="validate" >
+                            <label for="middle_init" class="active">Middle Initial</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input placeholder="Last Name" id="last_name" name="last_name" type="text" class="validate" required>
+                            <label for="last_name" class="active">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Username" id="username" name="username" type="text" class="validate" required autocomplete="off">
+                            <label for="username" class="active">Username</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input placeholder="Password" id="password" name="password" type="password" class="validate" required autocomplete="off">
+                            <label for="password" class="active">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select id="selectError2" name="role" data-rel="chosen" required>
+                                <option value="" disabled selected>Choose role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Staff">Staff</option>
+                                <option value="Checker">Checker</option>
+                            </select>
+                        </div>
+                        <div class="input-field col s6">
+                            <select class="icons" name="avatar">
+                                <option value="" disabled selected>Choose your avatar</option>
+                                <option value="assets/images/avatar1.jpg" data-icon="assets/images/avatar1.jpg" class="left circle">Avatar 1</option>
+                                <option value="assets/images/avatar2.jpg" data-icon="assets/images/avatar2.jpg" class="left circle">Avatar 2</option>
+                                <option value="assets/images/avatar3.jpg" data-icon="assets/images/avatar3.jpg" class="left circle">Avatar 3</option>
+                                <option value="assets/images/avatar4.jpg" data-icon="assets/images/avatar4.jpg" class="left circle">Avatar 4</option>
+                                <option value="assets/images/avatar5.png" data-icon="assets/images/avatar5.png" class="left circle">Avatar 5</option>
+                                <option value="assets/images/avatar6.png" data-icon="assets/images/avatar6.png" class="left circle">Avatar 6</option>
+                                <option value="assets/images/avatar7.png" data-icon="assets/images/avatar7.png" class="left circle">Avatar 7</option>
+                                <option value="assets/images/avatar8.jpg" data-icon="assets/images/avatar8.jpg" class="left circle">Avatar 8</option>
+                                <option value="assets/images/avatar9.png" data-icon="assets/images/avatar9.png" class="left circle">Avatar 9</option>
+                            </select>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating blue" type="submit" name="action"/>
+                                        <i class="material-icons left">add</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+	{/addCategory}
+	
+    <script type="text/javascript">
+        $('.chips').material_chip();
+        $('.chips-initial').material_chip('data');
+    </script>
+
+</body>
+</html>

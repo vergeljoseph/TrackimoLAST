@@ -1,0 +1,123 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Advertisers</title>
+    <style type="text/css">
+        .middle-content {
+            padding-top: 25px;
+            /* padding-right: 25px; */
+            float: left;
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript"> 
+        function ConvertToCSV() {
+                var url = 'http://192.168.32.89:3000/generate-advertisers/';
+                var title = 'Company Name, Website, Social Media, Email Address, Remarks, Phone Number, Contact Person\r\n';
+            
+            
+            var objArray;
+            
+            $.getJSON(url, function(items) {
+                console.log('getjson function');
+                objArray = JSON.stringify(items);
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ',';
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+                str = title + str;
+                var downloadLink = document.createElement("a");
+                var blob = new Blob(["\ufeff", str]);
+                var urlname = URL.createObjectURL(blob);
+                downloadLink.href = urlname;
+                downloadLink.download = "Advertisers_List.csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+
+        }
+    </script>
+</head>
+<body>
+	
+	{<viewAdvertiser}
+		<!-- start: Content -->
+        {@select key=role }
+                        {@eq value="Admin"}
+                            <div class="fixed-action-btn toolbar">
+                                  <a class="btn-floating btn-large red" onclick="ConvertToCSV()">
+                                    <i class="large material-icons">receipt</i>
+                                  </a>
+                            </div>   
+                        {/eq}
+                        {@eq value="Staff"}
+                            <div class="fixed-action-btn toolbar">
+                                  <a class="btn-floating btn-large red" onclick="ConvertToCSV()">
+                                    <i class="large material-icons">receipt</i>
+                                  </a>
+                            </div>   
+                        {/eq}
+                    {/select}
+        
+		<div class="card-content">
+            <h3>List of Advertisers</h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+                <table class="bordered striped highlight responsive-table mdl-data-table" style="width: 100%">
+                    <thead>
+                      <tr>
+                        
+                          <strong><th><center>E-mail Address</center></th></strong>
+                          <strong><th><center>Company</center></th></strong>
+                          <strong><th><center>Contact Person</center></th></strong>
+                          <strong><th><center>Phone Number</center></th></strong>
+                          <strong><th><center>Website</center></th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                       
+                        
+                        {#advertiser}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered"><center>{email_address}</td>
+                            <td class="centered"><center>{company_name}</td>
+                            <td class="centered"><center>{contact_person}</td>
+                            <td class="centered"><center>{phone_number}</td>
+                            <td class="centered"><center>{website}</td>
+                            
+                            <form action="/viewAdvertiserDetails" method="POST">
+                            <input type="hidden" name="holder" value="{id}"/>
+                            <td class="centered"><center><button class="btn-floating violet" type="submit" name="action"/>
+                            <i class="material-icons left">visibility</i></td>
+                            </form>
+                        </tr>
+                        {/advertiser}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewAdvertiser}
+</body>
+</html>

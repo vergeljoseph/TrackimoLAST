@@ -1,0 +1,45 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | Edit Category</title>
+</head>
+<body>
+    
+    {<editCategory}
+        <!-- start: Content -->
+        <div class="card-content">
+            <h3><span class="card-title">Edit Category</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/searchCategoryForEdit" method="POST">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError2" name="category" data-rel="chosen" onchange="changeValueStaffOffice()">
+                                <option value="" disabled selected>Choose category to edit</option>
+                                  {#category}
+                                <option value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating green" type="submit" name="action"/>
+                                        <i class="material-icons left">mode_edit</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    {/editCategory}
+    
+
+</body>
+</html>

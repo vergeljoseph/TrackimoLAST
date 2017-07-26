@@ -1,0 +1,129 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Lead</title>
+    <script type="text/javascript">
+        function validateForm() {
+            var x = document.getElementById("error").innerHTML;
+            if (x === "Category and Niche doesn't match!") {
+                alert("Category and Niche doesn't match!");
+                return false;
+            }
+        }
+    </script>
+    
+</head>
+<body>
+	
+	{<addLead}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Add Lead</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/confirmAddLead" method="POST" onsubmit = "return validateForm()">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">store</i>
+                            <input placeholder="Company" id="company" name="company" type="text" class="validate" >
+                            <label for="company" class="active">Company Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">email</i>
+                            <input placeholder="Email" id="email_address" name="email_address" type="email" class="validate" multiple>
+                            <label for="email_address" class="active">Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input placeholder="Contact Person" id="contact_person" name="contact_person" type="text" class="validate">
+                            <label for="contact_person" class="active">Contact Person</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input placeholder="Phone Number" id="phone_number" name="phone_number" type="text" class="validate" >
+                            <label for="phone_number" class="active">Contact Number</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">language</i>
+                            <input placeholder="Website" id="website" name="website" type="text" class="validate" required>
+                            <label for="website" class="active">Website</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">http</i>
+                            <input placeholder="Contact URL" id="contact_url" name="contact_url" type="text" class="validate" >
+                            <label for="contact_url" class="active">Contact URL</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">room</i>
+                            <input placeholder="Address" id="address" name="address" type="text" class="validate" >
+                            <label for="address" class="active">Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">schedule</i>
+                            <input placeholder="e.g. UTC-5, UTC-6" id="timezone" name="timezone" type="text" class="validate" >
+                            <label for="timezone" class="active">Timezone</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError1" name="category" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose lead category</option>
+                                  {#category}
+                                <option value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Niche Name</label>
+                            <select id="selectError2" name="niche" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose lead niche</option>
+                                {#niche}
+                                <option value="{niche_id}" id ="{category_id}">{niche_name}</option>
+                                {/niche}
+                            </select>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        function changeValueStaffOffice() {
+                            var x = document.getElementById("selectError2").selectedIndex;
+                            var y = document.getElementById("selectError2").options;
+                            var x1 = document.getElementById("selectError1").selectedIndex;
+                            var y1 = document.getElementById("selectError1").options;
+                            if(y[x].id != y1[x1].value){
+                                document.getElementById("error").innerHTML = "Category and Niche doesn't match!";
+                            } else {
+                                document.getElementById("error").innerHTML = " ";
+                            }
+                        }
+                    </script>
+                    <p id="error" style="color: red"></p>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating blue" type="submit" name="action"/>
+                                        <i class="material-icons left">add</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+
+        
+	{/addLead}
+	
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | Edit Staff</title>
+    <script type="text/javascript">
+        function validateForm() {
+            var x = document.getElementById("error").innerHTML;
+            if (x === "Incorrect Password") {
+                alert("Authentication denied");
+                return false;
+            }else{
+                alert("Password successfully changed");
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    {<editCategory}
+        <!-- start: Content -->
+        <div class="card-content">
+            <h3><span class="card-title">Edit Staff</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/editStaffFinal" method="POST" onsubmit = "return validateForm()">
+                    <div class="row">
+                            <div class="input-field col s3">
+                                    <input placeholder="Password" id="password" name="password" type="password" class="validate" required autocomplete="off" onchange="changeValueStaffOffice()">
+                                    <label for="password" class="active">Input old password</label>
+                            </div><br>
+                            <p id="error"></p><br>
+                            
+                            <script type="text/javascript">
+                                function changeValueStaffOffice() {
+                                    
+                                    var x = document.getElementById("password");
+                                    if(x.value != {pass}){
+                                        document.getElementById("error").style.color = "red";
+                                        document.getElementById("error").innerHTML = "Incorrect Password";
+                                    } else {
+                                        document.getElementById("error").style.color = "green";
+                                        document.getElementById("error").innerHTML = "Password Match";
+                                    }
+                                }
+                            </script>
+                    </div>
+                    <div class="row">
+                             <div class="input-field col s3">
+                                    <input placeholder="Password" name="new_password" type="password" class="validate" required autocomplete="off">
+                                    <label for="password" class="active">Input new password</label>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating green" type="submit" name="action"/>
+                                        <i class="material-icons left">mode_edit</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    {/editCategory}
+    
+
+</body>
+</html>

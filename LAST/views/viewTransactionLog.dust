@@ -1,0 +1,50 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Transaction Log</title>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Transaction Log</span><br><br></h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <table class="bordered striped highlight responsive-table mdl-data-table">
+                    <thead>
+                      <tr>
+                          <strong><th class="centered"><center>Username</th></strong>
+                          <strong><th class="centered"><center>Action</th></strong>
+                          <strong><th class="centered"><center>Date</th></strong>
+                          <strong><th class="centered"><center>Time</th></strong>
+                    </thead>
+
+                    <tbody>
+
+                        {#transaction}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered"><center>{actor}</td>
+                            <td class="centered"><center>{title}</td>
+                            <td class="centered"><center>{month} {day}, {year}</td>
+                            <td class="centered"><center>{timeofaction}</td>
+                            
+                            
+                        </tr>
+                        {/transaction}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>

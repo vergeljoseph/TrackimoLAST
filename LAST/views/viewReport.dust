@@ -1,0 +1,94 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Report</title>
+    <script type="text/javascript">
+        function validateForm() {
+            var x = document.getElementById("error").innerHTML;
+            if (x === "Category and Niche doesn't match!") {
+                alert("Category and Niche doesn't match!");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+	
+	{<addNiche}
+		<!-- start: Content -->
+        
+		<div class="card-content">
+            <h3><span class="card-title">View Report</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/displayReport" method="POST" onsubmit = "return validateForm()">
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError1" name="category" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose Category</option>
+                                  {#category}
+                                <option value="{category_name}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                        <div class="input-field col s3">
+                            <label for="category_name" class="active">Niche Name</label>
+                            <select id="selectError2" name="niche" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose Niche</option>
+                                {#niche}
+                                <option value="{niche_name}" id ="{category_id}">{niche_name}</option>
+                                {/niche}
+                            </select>
+                        </div>
+                        <div class="input-field col s3">
+                            <label for="category_name" class="active">Email Status</label>
+                            <select id="selectError2" name="status" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose Status</option>
+                                <option value="DNO">Did Not Open</option>
+                                <option value="Opened">Opened</option>
+                                <option value="Bounced">Bounced</option>
+                                <option value="Complained">Complained</option>
+                                <option value="Unsubscribed">Unsubscribed</option>
+                                <option value="Clicked">Clicked</option>
+                            </select>
+                        </div>
+                        <div class="input-field col s3">
+                            <label for="category_name" class="active">Campaign Date</label>
+                             <input type="date" class="datepicker" name="date" required>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        function changeValueStaffOffice() {
+                            var x = document.getElementById("selectError2").selectedIndex;
+                            var y = document.getElementById("selectError2").options;
+                            var x1 = document.getElementById("selectError1").selectedIndex;
+                            var y1 = document.getElementById("selectError1").options;
+                            if(y[x].id != y1[x1].id){
+                                document.getElementById("error").innerHTML = "Category and Niche doesn't match!";
+                            } else {
+                                document.getElementById("error").innerHTML = " ";
+                            }
+                        }
+                    </script>
+                    <p id="error" style="color: red"></p>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating orange" type="submit" name="action"/>
+                                        <i class="material-icons left">search</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+	{/addNiche}
+	
+
+</body>
+</html>

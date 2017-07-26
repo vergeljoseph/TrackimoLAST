@@ -1,0 +1,140 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Leads</title>
+    <script type="text/javascript">
+        function validateForm() {
+            var x = document.getElementById("error").innerHTML;
+            if (x === "Category and Niche doesn't match!") {
+                alert("Category and Niche doesn't match!");
+                return false;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        document.getElementById('datePicker').valueAsDate = new Date();
+    </script>
+</head>
+<body>
+	
+	{<addCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Add Leads</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/confirmAddLeadBatch" method="POST" onsubmit = "return validateForm()">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <div class="file-field input-field">
+                              <div class="btn">
+                                <span>File</span>
+                                <input type="file" id="i_file">
+                              </div>
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" name="file_name" class="input-file " id="upload-input" type="file" required="">
+                                <input type="text" name="" id="name">
+                                
+                              </div>
+                              <button class="btn waves-effect waves-light" id="submits">Upload
+                                <i class="material-icons left">library_add</i>
+                            </button>
+                            
+                            </div>
+
+                            <input type="hidden" name="holder" id="holder">
+                        </div><br>
+                        <p id="done" style="color: green"></p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select id="selectError1" name="category" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose lead category</option>
+                                  {#category}
+                                <option value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Niche Name</label>
+                            <select id="selectError2" name="niche" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose lead niche</option>
+                                {#niche}
+                                <option value="{niche_id}" id ="{category_id}">{niche_name}</option>
+                                {/niche}
+                            </select>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Date Added</label>
+                            <input type="date" class="datepicker" name="date_added" id ="datePicker" required>
+                        </div>
+                            
+                    </div>
+                    <script type="text/javascript">
+                        function changeValueStaffOffice() {
+                            var x = document.getElementById("selectError2").selectedIndex;
+                            var y = document.getElementById("selectError2").options;
+                            var x1 = document.getElementById("selectError1").selectedIndex;
+                            var y1 = document.getElementById("selectError1").options;
+                            if(y[x].id != y1[x1].value){
+                                document.getElementById("error").innerHTML = "Category and Niche doesn't match!";
+                            } else {
+                                document.getElementById("error").innerHTML = " ";
+                            }
+                        }
+                    </script>
+                    <p id="error" style="color: red"></p>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Add
+						    	<i class="material-icons left">library_add</i>
+						  	</button>
+                        </div>
+                    </div>
+                    <div id="disp_tmp_path"></div>                    
+                </form>
+            </div>
+        </div>
+	{/addCategory}
+	
+    <script type="text/javascript">
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+          });
+    </script>
+    <script type="text/javascript">
+        document.getElementById("submits").onclick = function () {
+        var files = $('#upload-input').get(0).files;
+        var formData = new FormData();
+        if (files.length > 0){
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                formData.append('trackimo_files', file, file.name);
+            }
+
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data){
+                    console.log('upload successful!\n' + data);
+                     }       
+                });
+            }
+            document.getElementById("name").value = document.getElementById("upload-input").value;
+            document.getElementById("done").innerHTML = "\tUpload finished";
+        }
+    </script>
+</body>
+</html>

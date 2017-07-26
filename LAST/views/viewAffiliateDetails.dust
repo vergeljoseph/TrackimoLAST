@@ -1,0 +1,117 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Affiliate Details</title>
+</head>
+<body>
+	
+	{<addAdvertiser}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Affiliate Details</span></h3>
+            <div class="input-field col s12">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+            </div>
+            <div class="row">
+                
+                <form class="col s12" action="/updateAffiliateFinal" method="POST" onsubmit = "return validateForm()">
+                {#affiliate}
+                    <input type="hidden" name="id" id="id" value="{id}">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">store</i>
+                            <input style="color: #808080" placeholder="Company" id="company_name" name="company_name" type="text" class="validate" value="{company_name}" disabled>
+                            <label for="company_name" class="active">Company Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">email</i>
+                            <input style="color: #808080" placeholder="Email" id="email_address" name="email_address" type="email" class="validate" value="{email_address}" disabled>
+                            <label for="email_address" class="active" >Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input style="color: #808080" placeholder="Contact Person" id="contact_person" name="contact_person" type="text" class="validate" value="{contact_person}" disabled>
+                            <label for="contact_person" class="active">Contact Person</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input style="color: #808080" placeholder="Phone Number" id="phone_number" name="phone_number" type="text" class="validate" value="{phone_number}" disabled>
+                            <label for="phone_number" class="active">Contact Number</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">language</i>
+                            <input style="color: #808080" placeholder="Website" id="website" name="website" type="text" class="validate" required value="{website}" disabled>
+                            <label for="website" class="active">Website</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">forum</i>
+                            <input style="color: #808080" placeholder="Social Media" id="social_media" name="social_media" type="text" class="validate" value="{social_media}" disabled>
+                            <label for="social_media" class="active">Social Media</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <!-- <textarea id="remarks" name="remarks" maxlength="250" type="text" class="materialize-textarea" length="250" value="{remarks}" disabled></textarea> -->
+                            <input style="color: #808080" placeholder="Remarks" id="remarks" name="remarks" type="text" class="validate" value="{remarks}" disabled>
+                            <label for="remarks" class="active">Remarks</label>
+                        </div>
+                    </div>
+                    {@select key=role }
+                        {@eq value="Admin"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                            <td><form action="/removeAffiliate" method="POST">
+                                                <input type="hidden" name="id" value="{id}">
+                                                <button class="btn-floating red" type="submit" name="action"/>
+                                                <i class="material-icons left">delete</i>
+                                                </form></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                        {@eq value="Staff"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                            <td><form action="/removeAffiliate" method="POST">
+                                                <input type="hidden" name="id" value="{id}">
+                                                <button class="btn-floating red" type="submit" name="action"/>
+                                                <i class="material-icons left">delete</i>
+                                                </form></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                    {/select}
+                    
+                </form>
+                {/affiliate}
+            </div>
+        </div>
+	{/addAdvertiser}
+	
+    <script> 
+        $(document).ready(function() {
+            $('textarea#remarks').characterCounter();
+        });
+    </script>
+</body>
+</html>

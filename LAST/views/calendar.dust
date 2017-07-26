@@ -1,0 +1,61 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | View Schedule</title>
+</head>
+<body>
+    
+    {<viewCategory}
+        <!-- start: Content -->
+        <div class="card-content">
+            <h3><span class="card-title">Schedules</span><br><br></h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <table class="bordered striped highlight responsive-table mdl-data-table">
+                    <thead>
+                      <tr>
+                          <strong><th class="centered" colspan="3"><center>Date</th></strong>
+                          <strong><th class="centered"><center>Assignment</th></strong>
+                          <strong><th class="centered"><center>Type</th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {#sched}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered" width="10px"><center>{month}</td>
+                            <td class="centered" width="10px"><center>{day}, </td>
+                            <td class="centered" width="10px"><center>{year}</td>
+                            <td class="centered" ><center>{category} - {niche}</td>
+                            <td class="centered" ><center>{type}</td>
+                            <form action="/editSchedule" method="POST">
+                            <input type="hidden" name="holder" value="{id}"/>
+                            <!-- <td class="centered" width="10px"><center><button class="btn-floating green" type="submit" name="action"/>
+                            <i class="material-icons left">mode_edit</i></td> -->
+                            </form>
+                            <form action="/removeSchedule" method="POST">
+                            <input type="hidden" name="holder" value="{id}"/>
+                            <input type="hidden" name="holder2" value="{niche}"/>
+                            <td class="centered" width="10px"><center><button class="btn-floating red" type="submit" name="action"/>
+                            <i class="material-icons left">delete</i></td>
+                            </form>
+                            
+                        </tr>
+                        {/sched}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {/viewCategory}
+</body>
+</html>

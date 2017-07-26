@@ -1,0 +1,53 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<title>DataTables Bootstrap 3 example</title>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css"/>
+ 		
+		<!-- <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> -->
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#example').DataTable();
+			} );
+		</script>
+	</head>
+	<body>
+	{<viewCategory}
+		<div class="container">
+
+		<table id="example" class="display" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Jive</td>
+					<td>Lapu-lapu</td>
+				</tr>
+				<tr>
+					<td>Noel</td>
+					<td>Lahug</td>
+				</tr>
+			</tbody>
+		</table>
+			
+		</div>
+
+<script type="text/javascript">
+	// For demo to fit into DataTables site builder...
+	$('#example')
+		.removeClass( 'display' )
+		.addClass('table table-striped table-bordered');
+</script>
+{/viewCategory}
+	</body>
+</html>

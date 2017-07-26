@@ -1,0 +1,47 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Records</title>
+</head>
+<body>
+	
+	{<addNiche}
+		<!-- start: Content -->
+        
+		<div class="card-content">
+            <h3><span class="card-title">View Records</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/displayRecords" method="POST" onsubmit = "return validateForm()">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">User</label>
+                            <select id="selectError2" name="username" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                <option value="" disabled selected>Choose user records</option>
+                                  {#records}
+                                <option value="{username}" id ="{category_id}">{first_name} {middle_init} {last_name}</option>
+                              {/records}
+                            </select>
+                        </div>
+                    </div>
+                    <p id="error" style="color: red"></p>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating orange" type="submit" name="action"/>
+                                        <i class="material-icons left">search</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+	{/addNiche}
+	
+
+</body>
+</html>

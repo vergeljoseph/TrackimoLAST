@@ -1,0 +1,161 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Lead</title>
+    <script type="text/javascript">
+        function validateForm() {
+            var x = document.getElementById("error").innerHTML;
+            if (x === "Category and Niche doesn't match!") {
+                alert("Category and Niche doesn't match!");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+	
+	{<addLead}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Lead Details</span></h3>
+            <div class="input-field col s12">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+            </div>
+            <div class="row">
+                <form action="/editLead" method="POST">
+                    {#lead}
+                    <input type="hidden" name="email" id="email" value="{email_id}">
+                    <input type="hidden" id="category_holder" name = "cat" value="{category_id}" />
+                    <input type="hidden" id="niche_holder" name = "nic" value="{niche_id}" />
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">store</i>
+                            <input style="color: #696969" placeholder="Company" id="company" name="company" type="text" class="validate" value="{company}" disabled>
+                            <label for="company" class="active">Company Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">email</i>
+                            <input style="color: #696969" placeholder="Email" id="email_address" name="email_address" type="email" class="validate" value="{email_address}" disabled>
+                            <label for="email_address" class="active">Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input style="color: #696969" placeholder="Contact Person" id="contact_person" name="contact_person" type="text" class="validate" value="{contact_person}" disabled>
+                            <label for="contact_person" class="active">Contact Person</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input style="color: #696969" placeholder="Phone Number" id="phone_number" name="phone_number" type="text" class="validate" value="{phone_number}" disabled>
+                            <label for="phone_number" class="active">Contact Number</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">language</i>
+                            <input style="color: #696969" placeholder="Website" id="website" name="website" type="text" class="validate" value="{website}" disabled>
+                            <label for="website" class="active">Website</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">http</i>
+                            <input style="color: #696969" placeholder="Contact URL" id="contact_url" name="contact_url" type="text" class="validate" value="{contact_url}" disabled>
+                            <label for="contact_url" class="active">Contact URL</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">room</i>
+                            <input style="color: #696969" placeholder="Address" id="address" name="address" type="text" class="validate" value="{address}" disabled>
+                            <label for="address" class="active">Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">schedule</i>
+                            <input style="color: #696969" placeholder="e.g. UTC-5, UTC-6" id="timezone" name="timezone" type="text" class="validate" value="{timezone}" disabled>
+                            <label for="timezone" class="active">Timezone</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Category Name</label>
+                            <select style="color: #696969" id="selectError1" name="category" data-rel="chosen" onchange="changeValueStaffOffice()" value="{category_name}" disabled>
+                                  {#category}
+                                <option style="color: #696969" value="{category_id}" id ="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="category_name" class="active">Niche Name</label>
+                            <select style="color: #696969" id="selectError2" name="niche" data-rel="chosen" onchange="changeValueStaffOffice()" value="{niche_name}" disabled>
+                                {#niche}
+                                <option style="color: #696969" value="{niche_id}" id ="{category_id}">{niche_name}</option>
+                                {/niche}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input style="color: #696969" placeholder="e.g. UTC-5, UTC-6" id="staff_assigned" name="staff_assigned" type="text" class="validate" value="{staff_assigned}" disabled>
+                            <label for="staff_assigned" class="active">Staff Assigned</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">date_range</i>
+                            <input style="color: #696969" placeholder="e.g. UTC-5, UTC-6" id="date_added" name="date_added" type="text" class="validate" value="{month} {day}, {year}" disabled>
+                            <label for="date_added" class="active">Date Added</label>
+                        </div>
+                    </div>
+                    
+                    <p id="error" style="color: red"></p>
+                    {@select key=role }
+                        {@eq value="Admin"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                            <td><form action="/removeLead" method="POST">
+                                                <input type="hidden" name="email" id="email" value="{email_id}">
+                                                <button class="btn-floating red" type="submit" name="action"/>
+                                                <i class="material-icons left">delete</i>
+                                                </form></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                        {@eq value="Staff"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                            <td><form action="/removeLead" method="POST">
+                                                <input type="hidden" name="email" id="email" value="{email_id}">
+                                                <button class="btn-floating red" type="submit" name="action"/>
+                                                <i class="material-icons left">delete</i>
+                                                </form></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                    {/select}
+                    
+                    {/lead}
+                    
+            </div>
+        </div>
+	{/addLead}
+	
+
+</body>
+</html>

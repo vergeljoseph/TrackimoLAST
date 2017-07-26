@@ -1,0 +1,52 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Category</title>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">List of Categories</span><br><br></h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <table class="bordered striped highlight responsive-table mdl-data-table">
+                    <thead>
+                      <tr>
+                          <strong><th class="centered"><center>Category</th></strong>
+                          <strong><th class="centered"><center># of niche</th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {#category}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered">{category_name}</td>
+                            <td class="centered"><center>{count}</td>
+                            
+                            <form action="/nicheCategorized" method="POST">
+                            <input type="hidden" name="holder" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn-floating violet" type="submit" name="action"/>
+                            <i class="material-icons left">visibility</i></td><!-- 
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">View Leads</td> -->
+                            </form>
+                        </tr>
+                        {/category}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>

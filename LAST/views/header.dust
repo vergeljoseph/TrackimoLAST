@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <!-- Title -->
+        <title>LAST | Lead Automation System for Trackimo</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta charset="UTF-8">
+        <meta name="description" content="Responsive Admin Dashboard Template" />
+        <meta name="keywords" content="admin,dashboard" />
+        <meta name="author" content="Steelcoders" />
+        
+        <!-- Styles -->
+        <link type="text/css" rel="stylesheet" href="assets/plugins/materialize/css/materialize.min.css"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+        <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet"/>   
+        <link href="assets/plugins/metrojs/MetroJs.min.css" rel="stylesheet">
+        <link href="assets/plugins/weather-icons-master/css/weather-icons.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+
+
+            
+        <!-- Theme Styles -->
+        <link href="assets/css/alpha.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+        
+        <style type="text/css">
+            body {
+                overflow-y:hidden;
+                background-color: #F9F9F9;
+            }
+            ::-webkit-scrollbar { 
+                display: none; 
+            }
+            .toast{
+                display: none;
+            }
+
+            @media only screen and (min-width: 601px)
+                materialize.min.css:6
+                .row .col.m3 {
+                    width: 100%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+        </style>
+    </head>
+    <body>
+        <div class="loader-bg"></div>
+        <div class="loader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-teal lighten-1">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mn-content fixed-sidebar">
+            <header class="mn-header navbar-fixed">
+                <nav class="cyan darken-1" style="background-color: #25a7df">
+                    <div class="nav-wrapper row">
+                        
+                        <div class="header-title col s3 m3">      
+                            <span class="chapter-title" style="width: 100%"><img src="img/LAST.png" style="height: 50px; width: 40px; padding-top: 10px" /> <!-- LEAD AUTOMATION SYSTEM FOR TRACKIMO --></span>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <aside id="slide-out" class="side-nav white fixed">
+                <div class="side-nav-wrapper">
+                    <div class="sidebar-profile">
+                        {#avatar}
+                            <center><img src="{prof_pic}" style="width: 70%; height: 70%" class="circle" alt=""></center>
+                        <div class="sidebar-profile-info">
+                            <a href="javascript:void(0);" class="account-settings-link">
+                                <span>{first_name} {last_name}<i class="material-icons right">arrow_drop_down</i></span>
+                            </a>{/avatar}
+                            <a href="javascript:void(0);" class="account-settings-link">
+                                <span>{role}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sidebar-account-settings">
+                        <ul>
+                            <li class="no-padding">
+                                <a class="waves-effect waves-grey" href="/logout"><i class="material-icons">exit_to_app</i>Sign Out</a>
+                            </li>
+                            <li class="no-padding">
+                                <a class="waves-effect waves-grey" href="/editStaff"><i class="material-icons">mode_edit</i>Change Password</a>
+                            </li>
+                        </ul>
+                    </div>
+                <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
+                    <li class="no-padding active"><a class="waves-effect waves-grey active" href="/"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">view_headline</i>Categories<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addCategory">Add Category</a></li>
+                                <li><a href="/addCategoryBatch">Add Category (Batch)</a></li>
+                                <li><a href="/editCategory">Edit Category</a></li>
+                                <li><a href="/removeCategory">Remove Category</a></li>
+                                <li><a href="/viewCategory">View Categories</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">view_list</i>Niche<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul> 
+                                <li><a href="/addNiche">Add Niche</a></li>
+                                <li><a href="/editNiche">Edit Niche</a></li>
+                                <li><a href="/removeNiche">Remove Niche</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">face</i>Leads<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addLead">Add Lead</a>
+                                <li><a href="/addLeadBatch">Add Lead (Batch)</a></li>
+                                <!-- <li><a href="miscellaneous-sweetalert.html">Add Lead (Batch)</a> -->
+                                <!-- <li><a href="miscellaneous-nestable.html">Edit Lead</a> -->
+                                <!-- <li><a href="miscellaneous-masonry.html">Remove Lead</a> -->
+                                <li><a href="/searchLead">Search Lead</a>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">contacts</i>Advertisers<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addAdvertiser">Add Advertisers</a></li>
+                                <li><a href="/viewAdvertiser">View Advertisers</a></li>
+                                <li><a href="/searchAdvertiser">Search Advertisers</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">work</i>Affiliates<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addAffiliate">Add Affiliates</a></li>
+                                <li><a href="/viewAffiliate">View Affiliates</a></li>
+                                <li><a href="/searchAffiliate">Search Affiliates</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">record_voice_over</i>Influencers<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addInfluencer">Add Influencers</a></li>
+                                <li><a href="/viewInfluencer">View Influencers</a></li>
+                                <li><a href="/searchInfluencer">Search Influencers</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">description</i>Reports<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/viewReport">View Reports</a></li>
+                                <li><a href="/updateReport">Update Reports</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">date_range</i>Schedule<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/setSchedule">Set Schedule</a></li>
+                                <li><a href="/calendar">View Schedule</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_circle</i>Staff<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/addStaff">Add Staff</a></li>
+                                <!-- <li><a href="/editStaff">Edit Staff</a></li> -->
+                                <li><a href="/removeStaff">Remove Staff</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <a class="waves-effect waves-grey active" href="/viewRecords"><i class="material-icons">receipt</i>View Records</a>
+                    </li>
+                    <li class="no-padding">
+                        <a class="waves-effect waves-grey active" href="/viewTransactionLog"><i class="material-icons">reorder</i>View Transaction Log</a>
+                    </li>
+                </ul>
+                </div>
+            </aside>
+            <main class="mn-inner inner-active-sidebar">
+                <div class="middle-content">
+                    {+index/}
+                    {+addCategory/}
+                    {+editCategory/}
+                    {+updateCategoryProper/}
+                    {+updateNicheProper/}
+                    {+removeCategory/}
+                    {+viewCategory/}
+                    {+addNiche/}
+                    {+removeNiche/}
+                    {+addLead/}
+                    {+searchLead/}
+                    {+addAdvertiser/}
+                    {+viewAdvertiser/}
+                    {+searchAdvertiser/}
+                    {+pagenotfound/}
+                </div>
+            </main>      
+        </div>
+        
+        
+        <!-- Javascripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="assets/plugins/materialize/js/materialize.min.js"></script>
+        <script src="assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
+        <script src="assets/plugins/peity/jquery.peity.min.js"></script>
+        <script src="assets/js/alpha.min.js"></script>
+        <script src="assets/js/pages/dashboard.js"></script>
+        <script src="assets/js/main.js"></script>
+        <!-- <script src="assets/js/pages/new.js"></script> -->
+        
+    </body>
+</html>

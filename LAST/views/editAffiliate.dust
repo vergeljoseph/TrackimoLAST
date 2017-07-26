@@ -1,0 +1,87 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Edit Affiliate</title>
+</head>
+<body>
+	
+	{<addAdvertiser}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Edit Affiliate</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/updateAffiliateFinal" method="POST" onsubmit = "return validateForm()">
+                {#affiliate}
+                    <input type="hidden" name="id" id="id" value="{id}">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">store</i>
+                            <input placeholder="Company" id="company_name" name="company_name" type="text" class="validate" style="color: #808080" value="{company_name}">
+                            <label for="company_name" class="active">Company Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">email</i>
+                            <input placeholder="Email" id="email_address" name="email_address" type="email" class="validate" style="color: #808080" value="{email_address}">
+                            <label for="email_address" class="active">Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input placeholder="Contact Person" id="contact_person" name="contact_person" type="text" class="validate" style="color: #808080" value="{contact_person}">
+                            <label for="contact_person" class="active">Contact Person</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input placeholder="Phone Number" id="phone_number" name="phone_number" type="text" class="validate" style="color: #808080" value="{phone_number}">
+                            <label for="phone_number" class="active">Contact Number</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">language</i>
+                            <input placeholder="Website" id="website" name="website" type="text" class="validate" required style="color: #808080" value="{website}">
+                            <label for="website" class="active">Website</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">forum</i>
+                            <input placeholder="Social Media" id="social_media" name="social_media" type="text" class="validate" style="color: #808080" value="{social_media}">
+                            <label for="social_media" class="active">Social Media</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea id="remarks" name="remarks" maxlength="250" class="materialize-textarea" length="250" style="color: #808080" value="{remarks}"></textarea>
+                            <label for="remarks">Remarks</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    <p id="error" style="color: red"></p>
+                    <div class="row">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <button class="btn-floating green" type="submit" name="action"/>
+                                        <i class="material-icons left">mode_edit</i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+                {/affiliate}
+            </div>
+        </div>
+	{/addAdvertiser}
+	
+    <script> 
+        $(document).ready(function() {
+            $('textarea#remarks').characterCounter();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAST | Edit Niche</title>
+</head>
+<body>
+    
+    {<updateNicheProper}
+        <!-- start: Content -->
+        <div class="card-content">
+            <h3><span class="card-title">Edit Niche</span><br><br></h3>
+            <div class="row">
+                <form class="col s12" action="/updateNicheFinal" method="POST">
+                {#niche}
+                    <input type="hidden" id="category_holder" name = "off" value="{category_id}" />
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="niche_name" class="active">Niche Name</label>
+                            <input type="hidden" id="niche_id_holder" name="orig_niche_id" value="{niche_id}"/>
+                            <input name="niche_name" type="text" value="{niche_name}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="niche_name" class="active">Re-assign category:</label>
+                            <select class="input-xlarge focused" id="selectError1" name="category" data-rel="chosen" onchange="changeValueStaffcategory()">
+                              <option value="" disabled selected>Choose Category</option>
+                              {#category}
+                                <option value="{category_id}">{category_name}</option>
+                              {/category}
+                            </select>
+                        </div>
+                    </div>
+                    {/niche}
+                    <script type="text/javascript">
+                        var val = document.getElementById('category_holder').value;
+                        var sel = document.getElementById('selectError1');
+                        var opts = sel.options;
+                        for(var opt, j = 0; opt = opts[j]; j++) {
+                            if(opt.value == val) {
+                                sel.selectedIndex = j;
+                                break;
+                            }
+                        }
+                    </script>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="btn-floating green" type="submit" name="action"/>
+                                        <i class="material-icons left">mode_edit</i>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    {/updateNicheProper}
+    
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Records</title>
+    <script type="text/javascript"> 
+        function ConvertToCSV(username, date_added) {
+                alert("HELLO");
+                var url = 'http://192.168.33.220:8000/generate-records/' + username + '/' + date_added;
+                var title = 'Email Address\r\n';
+            
+            
+            var objArray;
+            
+            $.getJSON(url, function(items) {
+                console.log('getjson function');
+                objArray = JSON.stringify(items);
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ',';
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+                str = title + str;
+                var downloadLink = document.createElement("a");
+                var blob = new Blob(["\ufeff", str]);
+                var urlname = URL.createObjectURL(blob);
+                downloadLink.href = urlname;
+                downloadLink.download = "Leads_Added_By_" + username + "_on_" + date_added + "_List.csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+
+        }
+    </script>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">List of Records</span><br><br></h3>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <table class="bordered striped highlight responsive-table mdl-data-table">
+                    <thead>
+                      <tr>
+                          <strong><th class="centered"><center>Staff assigned</th></strong>
+                          <strong><th class="centered"><center>Date added</th></strong>
+                          <strong><th class="centered"><center># of leads added</th></strong>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {#records}
+                        <tr>
+                            <!-- <form action="/searchCategoryForEdit" method="POST">
+                            <input type="hidden" name="category" value="{category_id}"/>
+                            <td class="centered"><center><button class="btn waves-effect waves-light" type="submit" name="action">Edit</td>
+                            </form> -->
+                            <td class="centered"><center>{username}</td>
+                            <td class="centered"><center>{month} {day}, {year}</td>
+                            <td class="centered"><center>{count}</td>
+                            <!-- <td width="10px">
+                            <input type="hidden" name="holder" value="{date_added}"/>
+                            <center><button class="btn-floating violet" type="submit" name="action"/>
+                            <a href="#" onclick="ConvertToCSV('{username}', '{date_added}')"><center>
+                            <i class="material-icons">receipt</i>
+                            </a>
+                            </td> -->
+                            
+                            
+                        </tr>
+                        {/records}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>

@@ -1,0 +1,182 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Lead-</title>
+    <style type="text/css">
+        .middle-content {
+            padding-top: 25px;
+            /* padding-right: 25px; */
+            float: left;
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript"> 
+        function ConvertToCSV(niche_name, email_status, campaign) {
+                alert("You are about to download a report");
+                var url = 'http://192.168.32.89:3000/generate-report/' + niche_name + '/' + email_status + '/' + campaign;
+                var title = 'Email Address, Company, Contact Person, Website, Phone Number, Address, Timezone, Date Added, Staff Assigned, Contact URL\r\n';
+            
+            
+            var objArray;
+            
+            $.getJSON(url, function(items) {
+                console.log('getjson function');
+                objArray = JSON.stringify(items);
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ',';
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+                str = title + str;
+                var downloadLink = document.createElement("a");
+                var blob = new Blob(["\ufeff", str]);
+                var urlname = URL.createObjectURL(blob);
+                downloadLink.href = urlname;
+                downloadLink.download = niche_name + "_" + email_status + "_" + campaign + "List.csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+
+        }
+    </script>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3>Report</h3><br>
+            <div class="row" style="padding-left: 0%; padding-right: 5%; width: 100%">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <strong style="color:black; font-weight: bold; font-size: 18px"><center>EMAIL ADDRESS</strong>
+                    </div>
+                    <div class="input-field col s3">
+                        <strong style="color:black; font-weight: bold; font-size: 18px"><center>DOMAIN</strong>
+                    </div>
+                    <!-- <div class="input-field col s2">
+                        <center>{category_name}
+                    </div> -->
+                    <div class="input-field col s2">
+                        <strong style="color:black; font-weight: bold; font-size: 18px"><center>NICHE NAME</strong>
+                    </div>
+                    <div class="input-field col s2">
+                        <strong style="color:black; font-weight: bold; font-size: 18px"><center>EMAIL STATUS</strong>
+                    </div>
+                    <div class="input-field col s1">
+                        
+                    </div>
+                </div>
+                {#report}
+                    <form action="/updateReportFinal" method="POST">
+                        <input type="hidden" name="holder" value="{email_address}">
+                        <div class="row">
+                        <div class="input-field col s4">
+                            {email_address}
+                        </div>
+                        <div class="input-field col s3">
+                            {domain}
+                        </div>
+                        <div class="input-field col s2">
+                            <center>{niche_name}</center>
+                        </div>
+                        {@select key=role }
+                            {@eq value="Admin"}
+                            <div class="input-field col s2">
+                                <select id="selectError2" name="status" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                    <option value={email_status} selected>{email_status}</option>
+                                    <option value="DNO">Did Not Open</option>
+                                    <option value="Opened">Opened</option>
+                                    <option value="Bounced">Bounced</option>
+                                    <option value="Complained">Complained</option>
+                                    <option value="Unsubscribed">Unsubscribed</option>
+                                    <option value="Clicked">Clicked</option>
+                                </select>
+                            </div>
+                            {/eq}
+                            {@eq value="Staff"}
+                            <div class="input-field col s2">
+                                <select id="selectError2" name="status" data-rel="chosen" onchange="changeValueStaffOffice()" required>
+                                    <option value={email_status} selected>{email_status}</option>
+                                    <option value="DNO">Did Not Open</option>
+                                    <option value="Opened">Opened</option>
+                                    <option value="Bounced">Bounced</option>
+                                    <option value="Complained">Complained</option>
+                                    <option value="Unsubscribed">Unsubscribed</option>
+                                    <option value="Clicked">Clicked</option>
+                                </select>
+                            </div>  
+                            {/eq}
+                            {@eq value="Checker"}
+                            <div class="input-field col s2">
+                                <select id="selectError2" name="status" data-rel="chosen" onchange="changeValueStaffOffice()" disabled>
+                                    <option value={email_status} selected>{email_status}</option>
+                                    <option value="DNO">Did Not Open</option>
+                                    <option value="Opened">Opened</option>
+                                    <option value="Bounced">Bounced</option>
+                                    <option value="Complained">Complained</option>
+                                    <option value="Unsubscribed">Unsubscribed</option>
+                                    <option value="Clicked">Clicked</option>
+                                </select>
+                            </div>  
+                            {/eq}
+                        {/select}
+                        
+
+                        {@select key=role }
+                            {@eq value="Admin"}
+                            <div class="input-field col s1">
+                                <button class="btn-floating green" type="submit" name="action"/>
+                                <i class="material-icons left">mode_edit</i>
+                            </div>   
+                            {/eq}
+                            {@eq value="Staff"}
+                            <div class="input-field col s1">
+                                <button class="btn-floating green" type="submit" name="action"/>
+                                <i class="material-icons left">mode_edit</i>
+                            </div>   
+                            {/eq}
+                        {/select}
+                                              
+                    </form>
+                </div>
+                {@select key=role }
+                    {@eq value="Admin"}
+                    <div class="fixed-action-btn toolbar">
+                          <a class="btn-floating btn-large red" onclick="ConvertToCSV('{niche_name}', '{email_status}', '{campaign}')">
+                            <i class="large material-icons">receipt</i>
+                          </a>
+                    </div>   
+                    {/eq}
+                    {@eq value="Staff"}
+                    <div class="fixed-action-btn toolbar">
+                          <a class="btn-floating btn-large red" onclick="ConvertToCSV('{niche_name}', '{email_status}', '{campaign}')">
+                            <i class="large material-icons">receipt</i>
+                          </a>
+                    </div>   
+                    {/eq}
+                {/select}
+                       
+                {/report}
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>

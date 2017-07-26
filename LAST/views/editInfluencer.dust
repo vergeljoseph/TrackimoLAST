@@ -1,0 +1,149 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | Add Advertiser</title>
+</head>
+<body>
+	
+	{<addAdvertiser}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3><span class="card-title">Advertiser Details</span></h3>
+            <div class="input-field col s12">
+                <strong style="color:red; font-weight: bold; font-size: 18px">{error}</strong>
+            </div>
+            <div class="row">
+                
+                <form class="col s12" action="/updateInfluencerFinal" method="POST" onsubmit = "return validateForm()">
+                {#influencer}
+                    <input type="hidden" name="id" id="id" value="{id}">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">store</i>
+                            <input style="color: #808080" placeholder="Company" id="company_name" name="company_name" type="text" class="validate" value="{company_name}" >
+                            <label for="company_name" class="active">Company Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">email</i>
+                            <input style="color: #808080" placeholder="Email" id="email_address" name="email_address" type="email" class="validate" value="{email_address}" >
+                            <label for="email_address" class="active" >Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input style="color: #808080" placeholder="Contact Person" id="contact_person" name="contact_person" type="text" class="validate" value="{contact_person}" >
+                            <label for="contact_person" class="active">Contact Person</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input style="color: #808080" placeholder="Phone Number" id="phone_number" name="phone_number" type="text" class="validate" value="{phone_number}" >
+                            <label for="phone_number" class="active">Contact Number</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">language</i>
+                            <input style="color: #808080" placeholder="Website" id="website" name="website" type="text" class="validate" required value="{website}" >
+                            <label for="website" class="active">Website</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <i class="fa fa-facebook prefix" aria-hidden="true"></i>
+                            <input placeholder="Facebook" id="facebook" name="facebook" type="text" class="validate" value="{facebook}">
+                            <label for="facebook" class="active">Facebook</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="fa fa-twitter prefix" aria-hidden="true"></i>
+                            <input placeholder="Twitter" id="twitter" name="twitter" type="text" class="validate" value="{twitter}">
+                            <label for="twitter" class="active">Twitter</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="fa fa-instagram prefix" aria-hidden="true"></i>
+                            <input placeholder="Instagram" id="instagram" name="instagram" type="text" class="validate" value="{instagram}">
+                            <label for="instagram" class="active">Instagram</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <i class="fa fa-youtube prefix" aria-hidden="true"></i>
+                            <input placeholder="Youtube" id="youtube" name="youtube" type="text" class="validate" value="{youtube}">
+                            <label for="youtube" class="active">YouTube</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="fa fa-pinterest prefix" aria-hidden="true"></i>
+                            <input placeholder="Pinterest" id="pinterest" name="pinterest" type="text" class="validate" value="{pinterest}">
+                            <label for="pinterest" class="active">Pinterest</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="fa fa-linkedin prefix" aria-hidden="true"></i>
+                            <input placeholder="LinkedIn" id="linkedin" name="linkedin" type="text" class="validate" value="{linkedin}">
+                            <label for="linkedin" class="active">LinkedIn</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <i class="fa fa-google-plus prefix" aria-hidden="true"></i>
+                            <input placeholder="Google +" id="google_plus" name="google_plus" type="text" class="validate" value="{google_plus}">
+                            <label for="google_plus" class="active">Google +</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea id="remarks" name="remarks" maxlength="250" class="materialize-textarea" length="250"></textarea>
+                            <label for="remarks">Remarks</label>
+                        </div>
+                    
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix">perm_contact_calendar</i>
+                            <label for="category_name" class="active">Date Added</label>
+                            <input type="date" class="datepicker" name="date_added" id ="datePicker" required>
+                        </div>
+                    </div>
+                    {@select key=role }
+                        {@eq value="Admin"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                            
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                        {@eq value="Staff"}
+                            <div class="row">
+                                <div class="row">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px"><button class="btn-floating green" type="submit" name="action"/>
+                                                <i class="material-icons left">mode_edit</i></td></form>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {/eq}
+                    {/select}
+                    
+                </form>
+                {/influencer}
+            </div>
+        </div>
+	{/addAdvertiser}
+	
+    <script> 
+        $(document).ready(function() {
+            $('textarea#remarks').characterCounter();
+        });
+    </script>
+</body>
+</html>

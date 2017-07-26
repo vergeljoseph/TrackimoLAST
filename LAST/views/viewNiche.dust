@@ -1,0 +1,114 @@
+{@select key=role }
+    {@eq value="Admin"}{>"header"/}{/eq}
+    {@eq value="Staff"}{>"header2"/}{/eq}
+    {@eq value="Checker"}{>"header3"/}{/eq}
+{/select}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAST | View Niche</title>
+    <script type="text/javascript"> 
+        function ConvertToCSV(niche_name) {
+                var url = 'http://192.168.32.89:3000/generate-list/' + niche_name;
+                var title = 'Email Address, Company, Contact Person, Website, Phone Number, Address, Timezone, Date Added, Staff Assigned, Contact URL, Assigned, Last Name\r\n';
+            
+            
+            var objArray;
+            
+            $.getJSON(url, function(items) {
+                console.log('getjson function');
+                objArray = JSON.stringify(items);
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ',';
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+                str = title + str;
+                var downloadLink = document.createElement("a");
+                var blob = new Blob(["\ufeff", str]);
+                var urlname = URL.createObjectURL(blob);
+                downloadLink.href = urlname;
+                downloadLink.download = niche_name + " List.csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+
+        }
+    </script>
+</head>
+<body>
+	
+	{<viewCategory}
+		<!-- start: Content -->
+		<div class="card-content">
+            <h3>List of Niche</h3>{#category}
+            <h5>{category_name}{/category}<br><br></h5>
+            <div class="row" style="padding-left: 0%; width: 90%">
+                <table class="bordered striped highlight responsive-table mdl-data-table">
+                    <thead>
+                      <tr>
+                        
+                          <strong><th class="centered"><center>Niche</th></strong>
+                          <strong><th class="centered"><center># of leads</th></strong>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                        {#niche}
+                        <tr>
+                            <td><center>{niche_name}</td>
+                            <td><center>{count}</td>
+                            <td width="10px">
+                                <form action="/leadsCategorized" method="POST">
+                                    <input type="hidden" name="holder" value="{niche_id}"/>
+                                        <center><button class="btn-floating violet" type="submit" name="action"/>
+                            <i class="material-icons left">visibility</i>
+                                </form>
+                            </td>
+                            {@select key=role }
+                                {@eq value="Admin"}<td width="10px">
+                            <input type="hidden" name="holder" value="{niche_id}"/>
+                            <center><button class="btn-floating violet" type="submit" name="action"/>
+                            <a href="#" onclick="ConvertToCSV('{niche_name}')"><center>
+                            <i class="material-icons">receipt</i>
+                            </a>
+                            </td>{/eq}
+                                {@eq value="Staff"}<td width="10px">
+                            <input type="hidden" name="holder" value="{niche_id}"/>
+                            <center><button class="btn-floating violet" type="submit" name="action"/>
+                            <a href="#" onclick="ConvertToCSV('{niche_name}')"><center>
+                            <i class="material-icons">receipt</i>
+                            </a>
+                            </td>{/eq}
+                                
+                            {/select}
+                            
+
+
+                            
+                            <!-- <td>
+                                <form action="/searchNicheForEdit" method="POST">
+                                    <input type="hidden" name="niche" value="{niche_id}"/>
+                                     <center><button class="btn waves-effect waves-light" type="submit" name="action">Edit Niche
+                                </form>
+                            </td> -->
+                        </tr>
+                        {/niche}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	{/viewCategory}
+</body>
+</html>
